@@ -1,3 +1,7 @@
+let datosMemoria=JSON.parse(localStorage.getItem("datos"))
+console.log(datosMemoria)
+
+
 let comentarios=[]
 let boton=document.getElementById("boton")
 boton.addEventListener("click",function(evento){
@@ -27,24 +31,40 @@ boton.addEventListener("click",function(evento){
     
     //agregar el conjunto de datos al arreglo previamente establecido
     comentarios.push(datosFormulario)
+    localStorage.setItem("datos",JSON.stringify(comentarios))
 
     console.log(comentarios)
+
+    Swal.fire({
+        title: "Comentario Registrado",
+        text: "Trabajaremos para brindarte un mejor servicio",
+        icon: "success"
+    });
 
 })
 
 //RUTINA PARA MOSTRAR LOS COMENTARIOS DE LOS CLIENTES
 //EN PANTALLA
-comentarios.forEach(function(comentario){
+let fila=document.getElementById("fila")
+datosMemoria.forEach(function(comentario){
     //Se crean tarjetas para mostrar la info
 
     let columna=document.createElement("div")
     columna.classList.add("col")
 
     let tarjeta=document.createElement("div")
-    tarjeta.classList.add("card","h-100", "shadow")
+    tarjeta.classList.add("card","h-100", "shadow","my-5", "p-5")
 
     let cliente=document.createElement("h4")
     cliente.classList.add("text-center","fw-bold")
-    cliente.textContent=comentario.nombre
+    cliente.textContent="Nombre del cliente: "+comentario.nombre
+
+    let comentarioCliente=document.createElement("p")
+    comentarioCliente.textContent=comentario.recomendacion
+
+    tarjeta.appendChild(cliente)
+    tarjeta.appendChild(comentarioCliente)
+    columna.appendChild(tarjeta)
+    fila.appendChild(columna)
 
 })
